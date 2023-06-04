@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myposts/home_screen/repository/posts_repository.dart';
+//import 'package:posts/home_screen/repository/posts_repository.dart';
 
 class PostsRepositoryProvider extends InheritedWidget {
   const PostsRepositoryProvider({
