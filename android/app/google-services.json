@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "691075154984",
+    "project_id": "appli-tp-notee",
+    "storage_bucket": "appli-tp-notee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691075154984:android:7b3b6897aa922bd987e11d",
+        "android_client_info": {
+          "package_name": "com.maaz.myposts"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXcwi0H_R4JoXYLfn86wg72-Ekmzc8TfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
