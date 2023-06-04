@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myposts/home_screen/edit_bloc/edit_bloc.dart';
@@ -7,12 +10,31 @@ import 'package:myposts/home_screen/home_screen.dart';
 import 'package:myposts/home_screen/models/post.dart';
 import 'package:myposts/home_screen/post_detail_screen/post_detail_screen.dart';
 import 'package:myposts/home_screen/repository/posts_repository.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
+//import 'firebase_options.dart';
 
 
-void main() {
-  const apiBaseUrl = String.fromEnvironment('API_BASE_URL', defaultValue: 'valid');
-  debugPrint('API_BASE_URL: $apiBaseUrl');
-  runApp(const MyApp());
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runZonedGuarded<Future<void>>(() async {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+    Isolate.current.addErrorListener(RawReceivePort((pair) async {
+      final List<dynamic> errorAndStacktrace = pair;
+      await FirebaseCrashlytics.instance.recordError(
+        errorAndStacktrace.first,
+        errorAndStacktrace.last,
+      );
+    }).sendPort);
+    const apiBaseUrl = String.fromEnvironment('API_BASE_URL', defaultValue: 'valid');
+    debugPrint('API_BASE_URL: $apiBaseUrl');
+    runApp(MyApp());
+  }, FirebaseCrashlytics.instance.recordError);
 }
 
 class MyApp extends StatelessWidget {
